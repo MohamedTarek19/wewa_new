@@ -16,9 +16,9 @@ class CustomSignIn_UpTwo extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         surfaceTintColor: Colors.white,
         minimumSize:
-        Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height*0.074),
+        Size(MediaQuery.of(context).size.width, 55),
         maximumSize:
-        Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height*0.074),
+        Size(MediaQuery.of(context).size.width, 55),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: const BorderSide(
@@ -53,6 +53,7 @@ class CustomSignIn_UpOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height*0.074;
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: ElevatedButton(
@@ -60,9 +61,9 @@ class CustomSignIn_UpOne extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
           elevation: 5,
           minimumSize:
-          Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height*0.074),
+          Size(MediaQuery.of(context).size.width, 55),
           maximumSize:
-          Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height*0.074),
+          Size(MediaQuery.of(context).size.width, 55),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)),
           backgroundColor: const Color(0xff0CB502),

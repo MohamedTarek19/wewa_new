@@ -16,12 +16,12 @@ class _EmailVerifyState extends State<EmailVerify> {
   late String code;
 
   var otpTextStyles = [
-    const TextStyle(fontSize: 16),
-    const TextStyle(fontSize: 16),
-    const TextStyle(fontSize: 16),
-    const TextStyle(fontSize: 16),
-    const TextStyle(fontSize: 16),
-    const TextStyle(fontSize: 16),
+    const TextStyle(fontSize: 12),
+    const TextStyle(fontSize: 12),
+    const TextStyle(fontSize: 12),
+    const TextStyle(fontSize: 12),
+    const TextStyle(fontSize: 12),
+    const TextStyle(fontSize: 12),
   ];
 
   @override
@@ -29,8 +29,12 @@ class _EmailVerifyState extends State<EmailVerify> {
     double actualHeight = (1 - (90 / MediaQuery.of(context).size.height)) *
         MediaQuery.of(context).size.height;
     return Scaffold(
+
       appBar: AppBar(
         toolbarHeight: 90,
+        scrolledUnderElevation: 0.0,
+          backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -42,71 +46,74 @@ class _EmailVerifyState extends State<EmailVerify> {
         width: MediaQuery.of(context).size.width,
         height: actualHeight,
         margin: const EdgeInsets.only(right: 20, left: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              children: [
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Email verification',
-                      style: TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Almost there! Just verify your email to continue.',
-                      style: TextStyle(
-                        fontSize: 14,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(
+                children: [
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Email verification',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Almost there! Just verify your email to continue.',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: OtpTextField(
+                        numberOfFields: 6,
+                        borderColor: const Color(0xFF0CB502),
+                        styles: otpTextStyles,
+                        fieldWidth: MediaQuery.of(context).size.width < 350?36:MediaQuery.of(context).size.width <300?33:45,
+                        borderWidth: 1,
+                        //set to true to show as box or false to show as dash
+                        showFieldAsBox: true,
+                        //runs when a code is typed in
+                        onCodeChanged: (String code) {
+                          //handle validation or checks here
+                          code = code;
+                        },
+                        //runs when every textfield is filled
+                        onSubmit: (String verificationCode) async {
+                          setState(() {
+                            code = verificationCode;
+                          });
+                        }, // end onSubmit
                       ),
                     ),
-                  ],
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: OtpTextField(
-                      numberOfFields: 6,
-                      borderColor: const Color(0xFF0CB502),
-                      styles: otpTextStyles,
-                      fieldWidth: 45,
-                      //set to true to show as box or false to show as dash
-                      showFieldAsBox: true,
-                      //runs when a code is typed in
-                      onCodeChanged: (String code) {
-                        //handle validation or checks here
-                        code = code;
-                      },
-                      //runs when every textfield is filled
-                      onSubmit: (String verificationCode) async {
-                        setState(() {
-                          code = verificationCode;
-                        });
-                      }, // end onSubmit
-                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: CustomSignIn_UpOne(title: 'Verify',ontap: () async {
-                    if (await verification.verifyOTP(otp: code) == true) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(
-                    content: Text("OTP is verified"),
-                    ),);
-                    } else {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(
-                    content: Text("Invalid OTP"),
-                    ),);
-                    }
-                  },),
-                ),
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: CustomSignIn_UpOne(title: 'Verify',ontap: () async {
+                      if (await verification.verifyOTP(otp: code) == true) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                      content: Text("OTP is verified"),
+                      ),);
+                      } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                      content: Text("Invalid OTP"),
+                      ),);
+                      }
+                    },),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
