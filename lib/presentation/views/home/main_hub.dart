@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/presentation/views/home/main_home.dart';
 
 class MainHub extends StatefulWidget {
@@ -44,7 +45,7 @@ class _MainHubState extends State<MainHub> {
     return Scaffold(
 
 
-      body: const MainHome(),
+      body: MainHome(),
 
 
 
@@ -52,14 +53,19 @@ class _MainHubState extends State<MainHub> {
         type : BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: selectPage,
-        selectedItemColor:Colors.black,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor:const Color(0xff0CB502),
+        unselectedItemColor: const Color(0xff737373),
         elevation: 9,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: 'home',),
-          BottomNavigationBarItem(icon: Icon(Icons.sell),label: 'vendor',),
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: 'vendor',),
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: 'vendor',),
+        items:  [
+          BottomNavigationBarItem(icon: SvgPicture.asset('assets/images/Icons/home_icon.svg',
+            color: _selectedIndex == 0? const Color(0xff0CB502):const Color(0xff737373),)
+            ,label: 'Home',),
+           BottomNavigationBarItem(icon: SvgPicture.asset('assets/images/Icons/vendor_icon.svg',
+            color: _selectedIndex == 1? const Color(0xff0CB502):const Color(0xff737373),),label: 'Vendor',),
+           BottomNavigationBarItem(icon: SvgPicture.asset('assets/images/Icons/categories_icon.svg',
+             color: _selectedIndex == 2? const Color(0xff0CB502):const Color(0xff737373),),label: 'Categories',),
+           BottomNavigationBarItem(icon: SvgPicture.asset('assets/images/Icons/profile_icon.svg',
+             color: _selectedIndex == 3? const Color(0xff0CB502):const Color(0xff737373),),label: 'Profile',),
         ],
       ),
     );
