@@ -1,20 +1,28 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wewa/bussiness_logic/state_cubits/forget_password_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/login_cubit.dart';
+import 'package:wewa/bussiness_logic/state_cubits/signup_cubit.dart';
 import 'package:wewa/presentation/views/login_signup_pages/onboarding.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MultiBlocProvider(
-  providers: [
-    BlocProvider(
-  create: (context) => LoginCubit(),
-),
-  ],
-  child: MyApp(),
-));
+    providers: [
+      BlocProvider(
+        create: (context) => LoginCubit(),
+      ),
+      BlocProvider(
+        create: (context) => ForgetPasswordCubit(),
+      ),
+      BlocProvider(
+        create: (context) => SignupCubit(),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,14 +40,14 @@ class MyApp extends StatelessWidget {
       ),
       home: AnimatedSplashScreen(
         backgroundColor: Color(0xff0CB502),
-        splashIconSize: MediaQuery.of(context).size.height*0.1,
+        splashIconSize: MediaQuery.of(context).size.height * 0.1,
         splash: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: SvgPicture.asset(
             'assets/images/logos/SplashLogo.svg',
-            width: MediaQuery.of(context).size.width*0.5,
-            height: MediaQuery.of(context).size.height*0.2,
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: MediaQuery.of(context).size.height * 0.2,
             fit: BoxFit.contain,
           ),
         ),
@@ -52,5 +60,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

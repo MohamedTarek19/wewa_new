@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/bussiness_logic/state_cubits/login_cubit.dart';
 import 'package:wewa/presentation/views/login_signup_pages/login_pages/forget_password_screen.dart';
+import 'package:wewa/presentation/views/login_signup_pages/register_pages/sign_up_first.dart';
 import 'package:wewa/presentation/widgets/custom_form_field.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
 
@@ -16,8 +17,8 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.94,
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height * 0.94,
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20,top: MediaQuery.of(context).size.height*0.09),
+                        padding: EdgeInsets.only(left: 20, right: 20,top: MediaQuery.sizeOf(context).height*0.09),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -33,9 +34,9 @@ class LoginScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 50),
                               child: SvgPicture.asset(
                                 'assets/images/logos/inAppLogo.svg',
-                                width: MediaQuery.of(context).size.width * 0.3,
+                                width: MediaQuery.sizeOf(context).width * 0.3,
                                 height:
-                                    MediaQuery.of(context).size.height * 0.1,
+                                MediaQuery.sizeOf(context).height * 0.1,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -53,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     SizedBox(
-                                      height: MediaQuery.of(context).size.height *
+                                      height: MediaQuery.sizeOf(context).height *
                                           0.02,
                                     ),
                                     CustomFormField(
@@ -198,12 +199,16 @@ class LoginScreen extends StatelessWidget {
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                        return SignupFirst();
+                                      },),);
+                                    },
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
-                                        color: Colors.black,
+                                        color: Color(0xff0CB502),
                                         width:
                                             1.0, // This would be the width of the underline
                                       ))),

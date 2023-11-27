@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wewa/presentation/views/home/main_home.dart';
 import 'package:wewa/presentation/views/login_signup_pages/login_pages/Login_screen.dart';
+import 'package:wewa/presentation/views/login_signup_pages/register_pages/sign_up_first.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -55,7 +57,9 @@ class OnboardingScreen extends StatelessWidget {
                         CustomSignIn_UpTwo(
                           title: "Sign Up",
                           ontap: (){
-
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                              return SignupFirst();
+                            },),);
                           },
                         ),
                       ],
@@ -139,7 +143,11 @@ class OnboardingScreen extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                            return MainHome();
+                          },),);
+                        },
                         child: Container(
                           decoration: const BoxDecoration(
                               border: Border(
@@ -147,7 +155,7 @@ class OnboardingScreen extends StatelessWidget {
                             color: Colors.black,
                             width:
                                 1.0, // This would be the width of the underline
-                          ))),
+                          ),),),
                           child: const Text(
                             "Continue as a guest",
                             style: TextStyle(

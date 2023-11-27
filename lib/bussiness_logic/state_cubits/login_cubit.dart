@@ -8,10 +8,14 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+
   bool obsecure = true;
 
   void visibiltyToggele(){
     obsecure = !obsecure;
     emit(toggle());
   }
+
+
 }

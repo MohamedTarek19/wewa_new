@@ -1,6 +1,10 @@
 import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:wewa/bussiness_logic/state_cubits/forget_password_cubit.dart';
+import 'package:wewa/bussiness_logic/state_cubits/forget_password_cubit.dart';
+import 'package:wewa/presentation/views/login_signup_pages/login_pages/create_new_password.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
 
 class EmailVerify extends StatefulWidget {
@@ -11,7 +15,7 @@ class EmailVerify extends StatefulWidget {
 }
 
 class _EmailVerifyState extends State<EmailVerify> {
-  EmailOTP verification = EmailOTP();
+
 
   late String code;
 
@@ -26,14 +30,13 @@ class _EmailVerifyState extends State<EmailVerify> {
 
   @override
   Widget build(BuildContext context) {
-    double actualHeight = (1 - (90 / MediaQuery.of(context).size.height)) *
-        MediaQuery.of(context).size.height;
+    double actualHeight = (1 - (90 / MediaQuery.sizeOf(context).height)) *
+        MediaQuery.sizeOf(context).height;
     return Scaffold(
-
       appBar: AppBar(
         toolbarHeight: 90,
         scrolledUnderElevation: 0.0,
-          backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -76,19 +79,23 @@ class _EmailVerifyState extends State<EmailVerify> {
                         numberOfFields: 6,
                         borderColor: const Color(0xFF0CB502),
                         styles: otpTextStyles,
-                        fieldWidth: MediaQuery.of(context).size.width < 350?36:MediaQuery.of(context).size.width <300?33:45,
+                        fieldWidth: MediaQuery.sizeOf(context).width < 350
+                            ? 36
+                            : MediaQuery.sizeOf(context).width < 300
+                                ? 33
+                                : 45,
                         borderWidth: 1,
                         //set to true to show as box or false to show as dash
                         showFieldAsBox: true,
                         //runs when a code is typed in
                         onCodeChanged: (String code) {
                           //handle validation or checks here
-                          code = code;
+                          context.read<ForgetPasswordCubit>().code = code;
                         },
                         //runs when every textfield is filled
                         onSubmit: (String verificationCode) async {
                           setState(() {
-                            code = verificationCode;
+                            context.read<ForgetPasswordCubit>().code = verificationCode;
                           });
                         }, // end onSubmit
                       ),
@@ -96,19 +103,33 @@ class _EmailVerifyState extends State<EmailVerify> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
-                    child: CustomSignIn_UpOne(title: 'Verify',ontap: () async {
-                      if (await verification.verifyOTP(otp: code) == true) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(
-                      content: Text("OTP is verified"),
-                      ),);
-                      } else {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(
-                      content: Text("Invalid OTP"),
-                      ),);
-                      }
-                    },),
+                    child:
+                        BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                      builder: (context, state) {
+                        return CustomSignIn_UpOne(
+                          title: 'Verify',
+                          ontap: () async {
+                            if (await context.read<ForgetPasswordCubit>().verification.verifyOTP(otp: context.read<ForgetPasswordCubit>().code) ==
+                                true) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("OTP is verified"),
+                                ),
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return CreateNewPassword();
+                              },),);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Invalid OTP"),
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
