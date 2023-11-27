@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/presentation/views/home/main_home.dart';
+import 'package:wewa/presentation/views/home/main_hub.dart';
 import 'package:wewa/presentation/views/login_signup_pages/login_pages/Login_screen.dart';
 import 'package:wewa/presentation/views/login_signup_pages/register_pages/sign_up_first.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
@@ -145,7 +146,7 @@ class OnboardingScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                            return MainHome();
+                            return MainHub();
                           },),);
                         },
                         child: Container(
