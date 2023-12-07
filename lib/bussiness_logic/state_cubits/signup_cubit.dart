@@ -18,13 +18,6 @@ class SignupCubit extends Cubit<SignupState> {
 
   bool obsecure = true;
 
-  void reset(){
-    name = TextEditingController();
-    email = TextEditingController();
-    password = TextEditingController();
-    confirmPassword = TextEditingController();
-    phone = TextEditingController();
-  }
   void addval(){
     value = countries?.first;
     //print(countries?.length);
@@ -34,7 +27,7 @@ class SignupCubit extends Cubit<SignupState> {
     obsecure = !obsecure;
     emit(toggle());
   }
-  Future CreateAccount({String? name,String? email,String? pass,String? phone,required BuildContext context}) async {
+  Future CreateAccount({String? name,String? email,String? pass,String? phone,}) async {
     // Initialize the API
     name = this.name.text;
     email = this.email.text;
@@ -82,10 +75,10 @@ class SignupCubit extends Cubit<SignupState> {
 
       var signUp = await wooCommerceAPI.postAsync("customers",data);
       emit(WewaSignUpSuccess());
-      print(signUp['message'] !=null? null: signUp);
-      return signUp['message'] !=null? null: signUp;
+      print(signUp);
+      return signUp;
     }catch(e){
-      //print('didn\'t get: ${e}');
+      print('didn\'t get: ${e}');
       emit(WewaSignUpFail());
       return null;
     }

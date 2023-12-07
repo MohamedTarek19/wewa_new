@@ -24,6 +24,9 @@ void main() {
       BlocProvider(
         create: (context) => WewaProductsCubit(),
       ),
+      BlocProvider(
+        create: (context) => WewaProductsCubit(),
+      ),
     ],
     child: MyApp(),
   ));

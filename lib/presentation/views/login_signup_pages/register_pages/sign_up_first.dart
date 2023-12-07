@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wewa/bussiness_logic/state_cubits/login_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/signup_cubit.dart';
 import 'package:wewa/presentation/views/login_signup_pages/login_pages/Login_screen.dart';
 import 'package:wewa/presentation/views/login_signup_pages/register_pages/sign_up_second.dart';
@@ -27,7 +26,7 @@ class SignupFirst extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: MediaQuery.sizeOf(context).height * 0.09),
+                      padding: EdgeInsets.only(left: 20, right: 20,top: MediaQuery.sizeOf(context).height*0.09),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -36,13 +35,13 @@ class SignupFirst extends StatelessWidget {
                             child: SvgPicture.asset(
                               'assets/images/logos/inAppLogo.svg',
                               width: MediaQuery.sizeOf(context).width * 0.3,
-                              height: MediaQuery.sizeOf(context).height * 0.1,
+                              height:
+                              MediaQuery.sizeOf(context).height * 0.1,
                               fit: BoxFit.contain,
                             ),
                           ),
                         ],
-                      ),
-                    ),
+                      ),),
                     Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: BlocBuilder<SignupCubit, SignupState>(
@@ -55,7 +54,8 @@ class SignupFirst extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   SizedBox(
-                                    height: MediaQuery.sizeOf(context).height * 0.01,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.01,
                                   ),
                                   CustomFormField(
                                     title: "Full Name",
@@ -82,7 +82,8 @@ class SignupFirst extends StatelessWidget {
                                     validation: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter your Email address';
-                                      } else if (!value.contains('@') || !value.contains('.com')) {
+                                      } else if (!value.contains('@') ||
+                                          !value.contains('.com')) {
                                         return "your email should be in the form example@xxx.com";
                                       } else if (value.contains(' ')) {
                                         return 'your email shouldn\'t contain spaces';
@@ -125,7 +126,7 @@ class SignupFirst extends StatelessWidget {
                                     obsecure: context.read<SignupCubit>().obsecure,
                                     passwordField: true,
                                     validation: (value) {
-                                      if (context.read<SignupCubit>().password.text != context.read<SignupCubit>().confirmPassword.text) {
+                                      if (context.read<SignupCubit>().password.text != context.read<SignupCubit>().confirmPassword.text){
                                         return 'your input should match the password';
                                       }
                                       return null;
@@ -133,16 +134,17 @@ class SignupFirst extends StatelessWidget {
                                     visibleOnTap: () {
                                       context.read<SignupCubit>().visibiltyToggele();
                                     },
+
                                   ),
                                 ],
                               ),
                             ),
                           );
                         },
-                      ),
-                    ),
+                      ),),
                     Padding(
-                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -152,60 +154,49 @@ class SignupFirst extends StatelessWidget {
                               title: 'Sign Up',
                               ontap: () {
                                 if (formkey.currentState!.validate()) {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return SignupSecondScreen();
-                                    },
-                                  ));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return SignupSecondScreen();
+                                  },));
                                 }
                               },
                             ),
                           ),
-                          BlocBuilder<LoginCubit, LoginState>(
-                            builder: (context, state) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 20, right: 20),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Already have an account?',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          context.read<LoginCubit>().reset();
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return LoginScreen();
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                              border: Border(
-                                                  bottom: BorderSide(
-                                            color: Color(0xff0CB502),
-                                            width: 1.0, // This would be the width of the underline
-                                          ))),
-                                          child: const Text(
-                                            "Log in",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xff0CB502),
-                                            ),
-                                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Already have an account?',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                        return LoginScreen();
+                                      },),);
+                                    },
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                color: Color(0xff0CB502),
+                                                width:
+                                                1.0, // This would be the width of the underline
+                                              ))),
+                                      child: const Text(
+                                        "Log in",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xff0CB502),
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

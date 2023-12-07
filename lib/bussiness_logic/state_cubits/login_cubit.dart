@@ -58,5 +58,36 @@ class LoginCubit extends Cubit<LoginState> {
 
   }
 
+  Future Login({String? email,String? pass}) async {
+    // Initialize the API
+    String mail = this.email.text;
+    String password = this.password.text;
+    try{
+      emit(WewaLoginLoading());
+      WooCommerceAPI wooCommerceAPI = WooCommerceAPI(
+          url: baseurl,
+          consumerKey: consumerKey,
+          consumerSecret: consumerSecret);
+
+      // Get data using the "products" endpoint
+      var usersList = await wooCommerceAPI.getAsync("customers");
+      emit(WewaLoginSuccess());
+      for(var e in usersList){
+        if(mail == e['email']){
+          print(1);
+          print(e);
+        }
+      }
+
+
+      return usersList;
+    }catch(e){
+      print('didn\'t get: ${e}');
+      emit(WewaLoginFail());
+      return null;
+    }
+
+  }
+
 
 }
