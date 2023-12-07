@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wewa/presentation/views/home/main_home.dart';
+import 'package:wewa/presentation/views/home/main_hub.dart';
+import 'package:wewa/presentation/views/login_signup_pages/login_pages/Login_screen.dart';
 import 'package:wewa/presentation/widgets/custom_phone_field.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
+import 'package:wewa/presentation/widgets/custom_snak_bar.dart';
 
 import '../../../../bussiness_logic/state_cubits/signup_cubit.dart';
 
@@ -11,8 +15,7 @@ class SignupSecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double actualHeight = (1 - (150 / MediaQuery.sizeOf(context).height)) *
-        MediaQuery.of(context).size.height;
+    double actualHeight = (1 - (150 / MediaQuery.sizeOf(context).height)) * MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
@@ -44,8 +47,7 @@ class SignupSecondScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Verify Phone Number',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         'One step closer to deliciousness! Verify your phone.',
@@ -58,7 +60,6 @@ class SignupSecondScreen extends StatelessWidget {
                 ),
                 BlocBuilder<SignupCubit, SignupState>(
                   builder: (context, state) {
-                    context.read<SignupCubit>().addval();
                     return Form(
                       key: formKey,
                       child: Column(
@@ -75,26 +76,57 @@ class SignupSecondScreen extends StatelessWidget {
                                   return "your name shouldn't contain Characters";
                                 } else if (value.length != 11) {
                                   return "your phone number should be 11 digits";
-                                } else if ((value[0] != '0' && value[1] != '1') &&
-                                    (value[2] != '0' ||
-                                        value[2] != '1' ||
-                                        value[2] != '2' ||
-                                        value[2] != '5')) {
+                                } else if ((value[0] != '0' && value[1] != '1') && (value[2] != '0' || value[2] != '1' || value[2] != '2' || value[2] != '5')) {
                                   return 'Invalid phone number\n{your phone first two digits\nshould start with \'01\' and\nthe third digit is either 0,1,2, or 5}';
                                 }
                                 return null;
                               },
                               controller: context.read<SignupCubit>().phone,
-                              val: context.read<SignupCubit>().value??{},
+                              val: context.read<SignupCubit>().value ?? {},
                               list: context.read<SignupCubit>().countries,
                             ),
                           ),
                           CustomSignIn_UpOne(
-                                title: 'Send Code',
-                                ontap: () async {
-                                  if (formKey.currentState!.validate()) {}
-                                },
-                              ),
+                            title: 'Send Code',
+                            ontap: () async {
+                              if (formKey.currentState!.validate()) {
+                                if (await context.read<SignupCubit>().CreateAccount(context: context) == null) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: Text(
+                                          'يوجد حساب مُسجّل بالفعل ببريدك الإلكتروني.\nيُرجى تسجيل الدخول.',
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                        actions: [
+                                          Center(
+                                            child: ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.popUntil(context, (route) => false);
+                                                  Navigator.push(context, MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return LoginScreen();
+                                                    },
+                                                  ));
+                                                },
+                                                style:ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color(0xff0CB502),
+                                                ),
+                                                child: Text('To Login Page',style: TextStyle(color: Colors.white),)),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              }
+                              Navigator.popUntil(context, (route) => false);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return MainHub();
+                              },));
+                            },
+                          ),
                         ],
                       ),
                     );

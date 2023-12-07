@@ -1,8 +1,11 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
 
 class MainHome extends StatelessWidget {
   MainHome({Key? key}) : super(key: key);
@@ -34,7 +37,7 @@ class MainHome extends StatelessWidget {
                   SvgPicture.asset(
                     item,
                     fit: BoxFit.contain,
-                    height: MediaQuery.of(context).size.height*0.38,
+                    height: MediaQuery.of(context).size.height * 0.38,
                     width: MediaQuery.of(context).size.width,
                   ),
                   Positioned(
@@ -43,7 +46,7 @@ class MainHome extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/imagesData/coffie.png',
                       fit: BoxFit.fill,
-                        height: MediaQuery.of(context).size.height*0.28,
+                      height: MediaQuery.of(context).size.height * 0.28,
                       width: MediaQuery.of(context).size.width * 0.55,
                     ),
                   ),
@@ -161,31 +164,10 @@ class MainHome extends StatelessWidget {
                     right: true,
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Special Offers",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                            InkWell(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xA6000000),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        SectionHead(title: 'Special Offers', seeMore: () {}),
                         Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 10),
-                          height: MediaQuery.of(context).size.height*0.33,
+                          height: MediaQuery.of(context).size.height * 0.33,
                           alignment: Alignment.center,
                           child: StatefulBuilder(
                             builder: (BuildContext context,
@@ -194,8 +176,9 @@ class MainHome extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    height: MediaQuery.of(context).size.height*0.28,
-                                    width:MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.28,
+                                    width: MediaQuery.of(context).size.width,
                                     child: CarouselSlider(
                                       carouselController: _controller,
                                       options: CarouselOptions(
@@ -245,28 +228,8 @@ class MainHome extends StatelessWidget {
                             },
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Categories",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                            InkWell(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xA6000000),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        SectionHead(title: 'Categories', seeMore: () {}),
+
                         Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 10),
                           height: 100,
@@ -300,179 +263,229 @@ class MainHome extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Top Seller",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                            InkWell(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xA6000000),
-                                  fontWeight: FontWeight.w400,
-                                ),
+                        SectionHead(title: 'Top Seller', seeMore: () {}),
+//
+                        BlocBuilder<WewaProductsCubit, WewaProductsState>(
+                          builder: (context, state) {
+                            //context.read<WewaProductsCubit>().getProducts();
+                            return Container(
+                              margin:
+                                  const EdgeInsets.only(bottom: 10, top: 10),
+                              height: 250,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return CartItem(
+                                    productImage:
+                                        'assets/images/imagesData/product.png',
+                                    title: 'Espresso',
+                                    addToCartOnTap: () {},
+                                    price: '14,50',
+                                    rate: '4.8',
+                                  );
+                                },
+                                itemCount: 5,
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
+                        SectionHead(title: 'Trending', seeMore: () {}),
                         Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 10),
                           height: 250,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Material(
-                                  elevation: 5,
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Container(
-                                    height: 120,
-                                    width: 160,
-                                    margin: const EdgeInsets.only(
-                                      left: 4,
-                                      right: 4,
-                                      top: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                //margin: const EdgeInsets.only(left: 4,right: 4,top: 4,),
-                                                height: 130,
-                                                width: 160,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(10),
-                                                    image: const DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/images/imagesData/product.png'),
-                                                      fit: BoxFit.fill,
-                                                    )),
-                                              ),
-                                              Positioned(
-                                                width: 35,
-                                                height: 35,
-                                                right: 5,
-                                                top: 5,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(100),
-                                                    color: Colors.white54
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(100),
-                                                    child: BackdropFilter(
-                                                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                                                      child: Icon(Icons.favorite_outline,color: Colors.white),
-                                                    ),
-                                                  ),
-
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              "Espresso",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.yellow[500],
-                                                ),
-                                                const Text("4.8 (+999)",
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ))
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              "24,90\$",
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.w400,
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  color: Color(0x73000000)),
-                                            ),
-                                            Text("14,50\$",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color(0xff0CB502),
-                                                )),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(5),
-                                                ),
-                                                backgroundColor: Color(0xff0CB502),
-                                                shadowColor: Color(0xff0CB502),
-                                                elevation: 5
-                                              ),
-                                              onPressed: () {},
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  SvgPicture.asset('assets/images/Icons/buyCart.svg'),
-                                                  Text(
-                                                      "Add to cart",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w700,
-                                                        color: Colors.white
-                                                      )
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              return CartItem(
+                                productImage:
+                                    'assets/images/imagesData/product2.png',
+                                title: 'Latte',
+                                addToCartOnTap: () {},
+                                price: '14,50',
+                                rate: '4.8',
                               );
                             },
                             itemCount: 5,
                           ),
                         ),
-
+                        Container(
+                            margin: const EdgeInsets.only(top: 8, bottom: 8),
+                            child: Image.asset(
+                                'assets/images/imagesData/card2.png')),
+                        SectionHead(title: 'Top Flavors', seeMore: () {}),
+                        Column(
+                          children: [
+                            Container(
+                              //color: Colors.blue,
+                              margin:
+                                  const EdgeInsets.only(bottom: 10, top: 10),
+                              height: 60,
+                              width: MediaQuery.of(context).size.width,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Container(
+                                        width: 110,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: const Color(0xff0CB502),
+                                          gradient: const LinearGradient(
+                                              colors: [
+                                                Color(0xff36d02d),
+                                                Color(0xff02b529),
+                                              ],
+                                              transform:
+                                                  GradientRotation(pi / 4)),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.white,
+                                            ),
+                                            BoxShadow(
+                                              color: Color(0xff0CB502),
+                                              spreadRadius: -12.0,
+                                              blurRadius: 12.0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            surfaceTintColor:
+                                                Colors.transparent,
+                                            //Color(0xff0CB502),
+                                            shadowColor: Colors.transparent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            minimumSize: const Size(110, 35),
+                                            maximumSize: const Size(110, 35),
+                                            visualDensity: const VisualDensity(
+                                                horizontal: 1),
+                                          ),
+                                          onPressed: () {},
+                                          child: const Text(
+                                            'All',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          surfaceTintColor: Colors.transparent,
+                                          backgroundColor:
+                                              const Color(0xffE9F8E4),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize: const Size(110, 35),
+                                          maximumSize: const Size(110, 35),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'Black Tea',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: Color(0xff36d02d),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          surfaceTintColor: Colors.transparent,
+                                          backgroundColor:
+                                              const Color(0xffE9F8E4),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize: const Size(110, 35),
+                                          maximumSize: const Size(110, 35),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'Green Tea',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: Color(0xff36d02d),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          surfaceTintColor: Colors.transparent,
+                                          backgroundColor:
+                                              const Color(0xffE9F8E4),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize: const Size(110, 35),
+                                          maximumSize: const Size(110, 35),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'White Tea',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: Color(0xff36d02d),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          surfaceTintColor: Colors.transparent,
+                                          backgroundColor:
+                                              const Color(0xffE9F8E4),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize: const Size(110, 35),
+                                          maximumSize: const Size(110, 35),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'Hazelnut',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: Color(0xff36d02d),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -482,6 +495,190 @@ class MainHome extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CartItem extends StatelessWidget {
+  CartItem({
+    super.key,
+    required this.productImage,
+    required this.addToCartOnTap,
+    required this.price,
+    required this.rate,
+    required this.title,
+  });
+
+  String productImage;
+  String title;
+  String rate;
+  String price;
+  void Function() addToCartOnTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          height: 140,
+          width: 170,
+          margin: const EdgeInsets.only(
+            left: 4,
+            right: 4,
+            top: 4,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Stack(
+                  children: [
+                    Container(
+                      //margin: const EdgeInsets.only(left: 4,right: 4,top: 4,),
+                      height: 130,
+                      width: 170,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(productImage),
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                    Positioned(
+                      width: 35,
+                      height: 35,
+                      right: 5,
+                      top: 5,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white54),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: BackdropFilter(
+                            filter:
+                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            child: const Icon(Icons.favorite_outline,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow[500],
+                      ),
+                      Text("$rate (+999)",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "24,90\$",
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.lineThrough,
+                        color: Color(0x73000000)),
+                  ),
+                  Text("$price\$",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff0CB502),
+                      )),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        backgroundColor: const Color(0xff0CB502),
+                        shadowColor: const Color(0xff0CB502),
+                        elevation: 5),
+                    onPressed: addToCartOnTap,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset('assets/images/Icons/buyCart.svg'),
+                        const Text("Add to cart",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SectionHead extends StatelessWidget {
+  SectionHead({super.key, required this.title, required this.seeMore});
+
+  String title;
+  void Function() seeMore;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            )),
+        InkWell(
+          onTap: seeMore,
+          child: const Text(
+            "See All",
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xA6000000),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

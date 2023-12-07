@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.2"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.3"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -93,10 +101,10 @@ packages:
     dependency: "direct main"
     description:
       name: email_otp
-      sha256: "3c056c345be34e827135ddfce0c22850b32e1b697ce0a59257ffbc8d98a67c3f"
+      sha256: cd1c90824f4da83764d8d0fdadcb152e4b4236102f3334f4753fc7f3d53a910b
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -204,10 +212,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -413,6 +421,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4-beta"
+  woocommerce_api:
+    dependency: "direct main"
+    description:
+      name: woocommerce_api
+      sha256: beaf62b549448767929167b9df5285fe2d04576f1b3fb151eb82d92c7cd66b56
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   xml:
     dependency: transitive
     description:
