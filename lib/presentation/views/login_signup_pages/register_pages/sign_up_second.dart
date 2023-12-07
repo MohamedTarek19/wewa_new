@@ -58,7 +58,7 @@ class SignupSecondScreen extends StatelessWidget {
                 ),
                 BlocBuilder<SignupCubit, SignupState>(
                   builder: (context, state) {
-                    context.read<SignupCubit>().addval();
+
                     return Form(
                       key: formKey,
                       child: Column(
@@ -92,7 +92,9 @@ class SignupSecondScreen extends StatelessWidget {
                           CustomSignIn_UpOne(
                                 title: 'Send Code',
                                 ontap: () async {
-                                  if (formKey.currentState!.validate()) {}
+                                  if (formKey.currentState!.validate()) {
+                                    await context.read<SignupCubit>().CreateAccount();
+                                  }
                                 },
                               ),
                         ],

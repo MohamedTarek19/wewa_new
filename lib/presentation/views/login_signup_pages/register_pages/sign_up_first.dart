@@ -58,6 +58,22 @@ class SignupFirst extends StatelessWidget {
                                         0.01,
                                   ),
                                   CustomFormField(
+                                    title: "Full Name",
+                                    HintText: "eg. John Doe",
+                                    controller: context.read<SignupCubit>().name,
+                                    obsecure: false,
+                                    passwordField: false,
+                                    validation: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'please enter your full name';
+                                      } else if (!value.contains(' ')) {
+                                        return "your name should contain spaces like \"John Doe\"";
+                                      }
+                                      return null;
+                                    },
+                                    visibleOnTap: () {},
+                                  ),
+                                  CustomFormField(
                                     title: "Email",
                                     HintText: "example@gmail.com",
                                     controller: context.read<SignupCubit>().email,
@@ -83,21 +99,21 @@ class SignupFirst extends StatelessWidget {
                                     obsecure: context.read<SignupCubit>().obsecure,
                                     passwordField: true,
                                     validation: (value) {
-                                      var temp = value?.split('');
-                                      if (value == null || value.isEmpty) {
-                                        return 'please enter your password';
-                                      } else if (!value.contains(RegExp(r'[0-9]')) ||
-                                          !value.contains(RegExp(r'[a-z]')) ||
-                                          !value.contains(RegExp(r'[A-Z]'))) {
-                                        return "your password should contain at least two small letters,\ncapital letters and four numbers";
-                                      } else if ((temp?.where((element) => element.contains(RegExp(r'[0-9]'))).length ?? 0) < 2
-                                          ||
-                                          (temp?.where((element) => element.contains(RegExp(r'[a-z]'))).length ?? 0) < 2
-                                          ||
-                                          (temp?.where((element) => element.contains(RegExp(r'[A-Z]'))).length ?? 0) < 4) {
-                                        return "your password should contain at least two small letters,\ncapital letters and four numbers";
-                                      }
-                                      return null;
+                                      // var temp = value?.split('');
+                                      // if (value == null || value.isEmpty) {
+                                      //   return 'please enter your password';
+                                      // } else if (!value.contains(RegExp(r'[0-9]')) ||
+                                      //     !value.contains(RegExp(r'[a-z]')) ||
+                                      //     !value.contains(RegExp(r'[A-Z]'))) {
+                                      //   return "your password should contain at least two small letters,\ncapital letters and four numbers";
+                                      // } else if ((temp?.where((element) => element.contains(RegExp(r'[0-9]'))).length ?? 0) < 2
+                                      //     ||
+                                      //     (temp?.where((element) => element.contains(RegExp(r'[a-z]'))).length ?? 0) < 2
+                                      //     ||
+                                      //     (temp?.where((element) => element.contains(RegExp(r'[A-Z]'))).length ?? 0) < 4) {
+                                      //   return "your password should contain at least two small letters,\ncapital letters and four numbers";
+                                      // }
+                                      // return null;
                                     },
                                     visibleOnTap: () {
                                       context.read<SignupCubit>().visibiltyToggele();
@@ -137,10 +153,11 @@ class SignupFirst extends StatelessWidget {
                             child: CustomSignIn_UpOne(
                               title: 'Sign Up',
                               ontap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return SignupSecondScreen();
-                                },));
-                                // if (formkey.currentState!.validate()) {}
+                                if (formkey.currentState!.validate()) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return SignupSecondScreen();
+                                  },));
+                                }
                               },
                             ),
                           ),

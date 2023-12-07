@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/bussiness_logic/state_cubits/forget_password_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/login_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/signup_cubit.dart';
+import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
 import 'package:wewa/presentation/views/login_signup_pages/onboarding.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,9 @@ void main() {
       ),
       BlocProvider(
         create: (context) => SignupCubit(),
+      ),
+      BlocProvider(
+        create: (context) => WewaProductsCubit(),
       ),
     ],
     child: MyApp(),

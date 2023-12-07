@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
 import 'package:wewa/presentation/views/home/main_home.dart';
 import 'package:wewa/presentation/views/home/main_hub.dart';
 import 'package:wewa/presentation/views/login_signup_pages/login_pages/Login_screen.dart';
@@ -25,7 +27,9 @@ class OnboardingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02,bottom: MediaQuery.of(context).size.height*0.14),
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.02,
+                        bottom: MediaQuery.of(context).size.height * 0.14),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -42,25 +46,34 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.02),
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.02),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         CustomSignIn_UpOne(
                           title: "Sign In",
-                          ontap: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                              return LoginScreen();
-                            },));
+                          ontap: () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                              builder: (context) {
+                                return LoginScreen();
+                              },
+                            ));
                           },
                         ),
                         CustomSignIn_UpTwo(
                           title: "Sign Up",
-                          ontap: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                              return SignupFirst();
-                            },),);
+                          ontap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return SignupFirst();
+                                },
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -143,28 +156,40 @@ class OnboardingScreen extends StatelessWidget {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                            return MainHub();
-                          },),);
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              border: Border(
+                      BlocBuilder<WewaProductsCubit, WewaProductsState>(
+                        builder: (context, state) {
+                          return TextButton(
+                            onPressed: () async {
+                              await context.read<WewaProductsCubit>().getProducts();
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return MainHub();
+                              //     },
+                              //   ),
+                              // );
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                border: Border(
                                   bottom: BorderSide(
-                            color: Colors.black,
-                            width:
-                                1.0, // This would be the width of the underline
-                          ),),),
-                          child: const Text(
-                            "Continue as a guest",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Color(0xaf000000),
+                                    color: Colors.black,
+                                    width:
+                                        1.0, // This would be the width of the underline
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                "Continue as a guest",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Color(0xaf000000),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ],
                   ),
