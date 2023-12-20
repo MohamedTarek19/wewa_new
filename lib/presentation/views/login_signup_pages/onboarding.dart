@@ -156,40 +156,32 @@ class OnboardingScreen extends StatelessWidget {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                      BlocBuilder<WewaProductsCubit, WewaProductsState>(
-                        builder: (context, state) {
-                          return TextButton(
-                            onPressed: () async {
-                              await context.read<WewaProductsCubit>().getProducts();
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return MainHub();
-                              //     },
-                              //   ),
-                              // );
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return MainHub();
                             },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.black,
-                                    width:
-                                        1.0, // This would be the width of the underline
-                                  ),
-                                ),
-                              ),
-                              child: const Text(
-                                "Continue as a guest",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Color(0xaf000000),
-                                ),
+                          ));
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black,
+                                width:
+                                    1.0, // This would be the width of the underline
                               ),
                             ),
-                          );
-                        },
+                          ),
+                          child: const Text(
+                            "Continue as a guest",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Color(0xaf000000),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

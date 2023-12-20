@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
+import 'package:wewa/presentation/views/home/main_hub.dart';
 import 'package:wewa/presentation/widgets/custom_phone_field.dart';
 import 'package:wewa/presentation/widgets/custom_signin_signup.dart';
+import 'package:wewa/presentation/widgets/custom_snak_bar.dart';
 
 import '../../../../bussiness_logic/state_cubits/signup_cubit.dart';
 
@@ -58,7 +61,6 @@ class SignupSecondScreen extends StatelessWidget {
                 ),
                 BlocBuilder<SignupCubit, SignupState>(
                   builder: (context, state) {
-
                     return Form(
                       key: formKey,
                       child: Column(
@@ -75,7 +77,8 @@ class SignupSecondScreen extends StatelessWidget {
                                   return "your name shouldn't contain Characters";
                                 } else if (value.length != 11) {
                                   return "your phone number should be 11 digits";
-                                } else if ((value[0] != '0' && value[1] != '1') &&
+                                } else if ((value[0] != '0' &&
+                                        value[1] != '1') &&
                                     (value[2] != '0' ||
                                         value[2] != '1' ||
                                         value[2] != '2' ||
@@ -85,18 +88,46 @@ class SignupSecondScreen extends StatelessWidget {
                                 return null;
                               },
                               controller: context.read<SignupCubit>().phone,
-                              val: context.read<SignupCubit>().value??{},
+                              val: context.read<SignupCubit>().value ?? {},
                               list: context.read<SignupCubit>().countries,
                             ),
                           ),
                           CustomSignIn_UpOne(
-                                title: 'Send Code',
-                                ontap: () async {
-                                  if (formKey.currentState!.validate()) {
-                                    await context.read<SignupCubit>().CreateAccount();
-                                  }
+                            title: 'Send Code',
+                            ontap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
                                 },
-                              ),
+                              );
+                              if (formKey.currentState!.validate()) {
+                                var res = await context
+                                    .read<SignupCubit>()
+                                    .CreateAccount();
+                                if (res['email'] == null) {
+                                  Navigator.pop(context);
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(CustomSnak(
+                                          content: Text(
+                                    res['message'].toString(),
+                                    style: TextStyle(color: Colors.red[900]),
+                                    textDirection: TextDirection.rtl,
+                                  )));
+                                } else {
+                                  Navigator.pop(context);
+                                  Navigator.popUntil(context, (route) => false);
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return MainHub();
+                                    },
+                                  ));
+                                }
+                              }
+                            },
+                          ),
                         ],
                       ),
                     );

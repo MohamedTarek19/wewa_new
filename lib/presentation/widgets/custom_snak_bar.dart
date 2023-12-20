@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-CustomSnak({String? title}) {
+CustomSnak({Widget? content}) {
   return SnackBar(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     margin: const EdgeInsets.only(
@@ -11,8 +11,8 @@ CustomSnak({String? title}) {
     behavior: SnackBarBehavior.floating,
     backgroundColor: const Color(0xffeeeeee),
     elevation: 5,
-    content: Text(
-      title ?? '',
+    content: content??Text(
+      'there is an error',
       style: TextStyle(color: Colors.red[900]),
     ),
   );

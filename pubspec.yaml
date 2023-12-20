@@ -43,6 +43,13 @@ dependencies:
   flutter_svg: ^2.0.9
   email_otp: ^2.0.1
   woocommerce_api: ^0.1.0
+  http:
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
+  cached_network_image: ^3.3.0
+  html: ^0.15.4
+  blurrycontainer: ^1.0.2
+  flutter_swipe_detector: ^2.0.0
 
 dev_dependencies:
   flutter_test:

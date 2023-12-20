@@ -13,7 +13,8 @@ class SignupCubit extends Cubit<SignupState> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController phone = TextEditingController();
-  List<Map<String,String>>? countries = [{'+20':'assets/images/Icons/egypt.svg'}];
+  List<Map<String,String>>? countries = [{'+20':'assets/images/Icons/egypt'
+      '.svg'}];
   Map<String,String>? value;
 
   bool obsecure = true;
@@ -27,6 +28,13 @@ class SignupCubit extends Cubit<SignupState> {
     obsecure = !obsecure;
     emit(toggle());
   }
+  void reset(){
+    name = TextEditingController();
+    email = TextEditingController();
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
+    phone = TextEditingController();
+  }
   Future CreateAccount({String? name,String? email,String? pass,String? phone,}) async {
     // Initialize the API
     name = this.name.text;
@@ -36,14 +44,14 @@ class SignupCubit extends Cubit<SignupState> {
 
     List<String> names = name.split(' ');
     Map<dynamic,dynamic> data = {
-      "email": "$email",
-      "first_name": "${names[0]}",
-      "last_name": "${names[1]}",
-      "password": "$pass",
-      "username": "$name",
+      "email": email,
+      "first_name": names[0],
+      "last_name": names[1],
+      "password": pass,
+      "username": name.replaceAll(' ', '.'),
       "billing": {
-        "first_name": "${names[0]}",
-        "last_name": "${names[1]}",
+        "first_name": names[0],
+        "last_name": names[1],
         "company": "",
         "address_1": "",
         "address_2": "",
@@ -51,12 +59,12 @@ class SignupCubit extends Cubit<SignupState> {
         "state": "",
         "postcode": "",
         "country": "",
-        "email": "$email",
-        "phone": "$phone"
+        "email": email,
+        "phone": phone
       },
       "shipping": {
-        "first_name": "${names[0]}",
-        "last_name": "${names[1]}",
+        "first_name": names[0],
+        "last_name": names[1],
         "company": "",
         "address_1": "",
         "address_2": "",
