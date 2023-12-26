@@ -9,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/bussiness_logic/state_cubits/screens_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
 import 'package:wewa/presentation/views/home/Categories_pages/filtered_items_screen.dart';
+import 'package:wewa/presentation/views/home/cart_screens/cart_screen.dart';
+import 'package:wewa/presentation/views/home/notification_screens/notification_screen.dart';
 import 'package:wewa/presentation/views/home/product_details_screens/poduct_details_screen.dart';
 
 class MainHome extends StatelessWidget {
@@ -83,7 +85,11 @@ class MainHome extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return NotificationScreen();
+                          },));
+                        },
                         icon: SvgPicture.asset(
                           'assets/images/Icons/notification.svg',
                           height: 18,
@@ -109,7 +115,11 @@ class MainHome extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return CartScreen();
+                          },));
+                        },
                         icon: SvgPicture.asset(
                           'assets/images/Icons/cart.svg',
                           height: 18,

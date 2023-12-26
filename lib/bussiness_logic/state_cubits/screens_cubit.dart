@@ -5,7 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:wewa/presentation/views/home/Categories_pages/all_categories_Screen.dart';
 import 'package:wewa/presentation/views/home/main_home.dart';
 import 'package:wewa/presentation/views/login_signup_pages/onboarding.dart';
-import 'package:wewa/presentation/views/profile_pages/profile_main.dart';
+import 'package:wewa/presentation/views/profile_screens/profile_main.dart';
+
 
 part 'screens_state.dart';
 
@@ -38,7 +39,7 @@ class ScreensCubit extends Cubit<ScreensState> {
       MainHome(),
       SafeArea(child: Placeholder(child: _widgetOptions[1],)),
       AllCategories(),
-     ProfileMain(),
+      ProfileMain(),
 
     ];
   }

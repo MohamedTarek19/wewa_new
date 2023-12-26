@@ -1,6 +1,6 @@
 const baseurl = 'https://wewatea.com/';
 
-const consumerKey = 'ck_a18266a4e240f44d992d710257433fdd5b7fa9e2';
+const consumerKey = 'ck_eaeba755a6648166d23b98d12e5a5407bcadd4da';
 
-const consumerSecret = 'cs_6e39fbef71a9022bc79d71cd0dfb0b61d49e8e1d';
+const consumerSecret = 'cs_44029b7bb5e4661272087a707a0f85b68ad0ad96';
 

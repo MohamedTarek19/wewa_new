@@ -71,7 +71,7 @@ class WewaProductsCubit extends Cubit<WewaProductsState> {
         var headers = {
           'X-WP-Total': '100',
           'X-WP-TotalPages': '100',
-          'Authorization': 'Basic Y2tfYTE4MjY2YTRlMjQwZjQ0ZDk5MmQ3MTAyNTc0MzNmZGQ1YjdmYTllMjpjc182ZTM5ZmJlZjcxYTkwMjJiYzc5ZDcxY2QwZGZiMGI2MWQ0OWU4ZTFk',
+          'Authorization': 'Basic Y2tfZWFlYmE3NTVhNjY0ODE2NmQyM2I5OGQxMmU1YTU0MDdiY2FkZDRkYTpjc180NDAyOWI3YmI1ZTQ2NjEyNzIwODdhNzA3YTBmODViNjhhZDBhZDk2',
         };
         var url = Uri.parse('https://wewatea.com/wp-json/wc/v3/products?category=${categoryId}&per_page=10&page=1');
         var response1 = await http.get(url,headers: headers);
