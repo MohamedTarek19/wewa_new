@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wewa/bussiness_logic/state_cubits/connectivity_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/forget_password_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/login_cubit.dart';
 import 'package:wewa/bussiness_logic/state_cubits/screens_cubit.dart';
@@ -52,6 +53,9 @@ Future<void> main() async {
       BlocProvider(
         create: (context) => ScreensCubit()..ScreensInitializer(),
       ),
+      BlocProvider(
+        create: (context) => ConnectivityCubit()..connectivityListener(),
+      ),
     ],
     child: MyApp(),
   ));
@@ -70,7 +74,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AnimatedSplashScreen(
+      home: BlocBuilder<ConnectivityCubit, ConnectivityState>(
+  builder: (context, state) {
+    return AnimatedSplashScreen(
             backgroundColor: Color(0xff0CB502),
             splashIconSize: MediaQuery.of(context).size.height * 0.1,
             splash: Container(
@@ -88,7 +94,9 @@ class MyApp extends StatelessWidget {
             nextScreen: flag == true?OnboardingScreen():MainHub(),
             splashTransition: SplashTransition.fadeTransition,
             pageTransitionType: PageTransitionType.fade,
-          ),
+          );
+  },
+),
     );
   }
 }

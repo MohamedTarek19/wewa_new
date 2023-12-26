@@ -6,6 +6,7 @@ import 'package:wewa/presentation/views/home/Categories_pages/all_categories_Scr
 import 'package:wewa/presentation/views/home/main_home.dart';
 import 'package:wewa/presentation/views/login_signup_pages/onboarding.dart';
 import 'package:wewa/presentation/views/profile_screens/profile_main.dart';
+import 'package:wewa/presentation/views/vendor_screens/vendor_screen.dart';
 
 
 part 'screens_state.dart';
@@ -37,7 +38,7 @@ class ScreensCubit extends Cubit<ScreensState> {
   ScreensInitializer(){
     screens = [
       MainHome(),
-      SafeArea(child: Placeholder(child: _widgetOptions[1],)),
+      SafeArea(child: VendorScreen()),
       AllCategories(),
       ProfileMain(),
 
