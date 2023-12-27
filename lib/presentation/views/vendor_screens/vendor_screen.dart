@@ -51,33 +51,12 @@ class _VendorScreenState extends State<VendorScreen> {
     newGoogleMapController?.animateCamera(CameraUpdate.newCameraPosition(cam));
   }
   getLocationUpdates()async{
-    PermissionStatus _permissionGranted;
-    serviceEnabled = await locationController.serviceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        duration: Duration(seconds: 5),
-        backgroundColor: Colors.red,
-        content: Text('Location services are disabled.'),
-      ));
-      serviceEnabled = await locationController.requestService();
-    }
-    _permissionGranted = await locationController.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await locationController.requestPermission();
-      if (_permissionGranted == PermissionStatus.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.red,
-          content: Text('Location permissions are denied'),
-        ));
-      }
-    }
-
     locationController.onLocationChanged.listen((event) {
       if (event.latitude != null && event.longitude != null) {
         setState(() {
           currentPosition = event;
-
+          CameraPosition cam = CameraPosition(target: LatLng(event.latitude!, event.longitude!), zoom: 15);
+          newGoogleMapController?.animateCamera(CameraUpdate.newCameraPosition(cam));
         });
       }
     });
@@ -86,7 +65,7 @@ class _VendorScreenState extends State<VendorScreen> {
 
   @override
   initState(){
-    getLocationUpdates();
+
     super.initState();
   }
 
@@ -111,15 +90,37 @@ class _VendorScreenState extends State<VendorScreen> {
           print("#########################################################3\n$val");
         },
         onMapCreated: (GoogleMapController controller) async {
-          newGoogleMapController =  controller;
-          _controller.complete(newGoogleMapController);
-          CameraPosition cam = CameraPosition(target: LatLng(currentPosition?.latitude??0, currentPosition?.longitude??0), zoom: 20);
-          newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cam));
+          _controller.complete(controller);
+          newGoogleMapController = controller;
+          PermissionStatus _permissionGranted;
+          serviceEnabled = await locationController.serviceEnabled();
+          if (!serviceEnabled) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.red,
+              content: Text('Location services are disabled.'),
+            ));
+            serviceEnabled = await locationController.requestService();
+          }
+          _permissionGranted = await locationController.hasPermission();
+          if (_permissionGranted == PermissionStatus.denied) {
+            _permissionGranted = await locationController.requestPermission();
+            if (_permissionGranted == PermissionStatus.denied) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                duration: Duration(seconds: 5),
+                backgroundColor: Colors.red,
+                content: Text('Location permissions are denied'),
+              ));
+            }
+          }
+          await _locatePosition();
+
+
         },
         markers: {
           Marker(
             onTap: () {
-
+              getLocationUpdates();
             },
             markerId: MarkerId('1'),
             icon: BitmapDescriptor.defaultMarkerWithHue(100),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wewa/bussiness_logic/state_cubits/wewa_products_cubit.dart';
 import 'package:wewa/presentation/views/home/Categories_pages/filtered_items_screen.dart';
@@ -61,58 +62,66 @@ class AllCategories extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.69,
-              width: MediaQuery.of(context).size.width,
-              child: BlocBuilder<WewaProductsCubit, WewaProductsState>(
-                builder: (context, state) {
-                  return context.read<WewaProductsCubit>().flag == false
-                      ? const Center(
-                          child: Text("Loading"),
-                        )
-                      : GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 2,
-                          ),
-                          itemCount: context.read<WewaProductsCubit>().Categories.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () async {
-                                showDialog(context: context, builder: (context) {
-                                  return Center(child: CircularProgressIndicator());
-                                },);
-                                context.read<WewaProductsCubit>()
-                                    .cat = context.read<WewaProductsCubit>().Categories[index];
-                                await context.read<WewaProductsCubit>().scrollIntializer();
-                                await context.read<WewaProductsCubit>().getCategoryProducts(
-                                      categoryId: context.read<WewaProductsCubit>().Categories[index].id??0,
-                                      pageNumber: 1,
-                                    );
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return FilteredItemsScreen(
-                                        title: context.read<WewaProductsCubit>().Categories[index].categoryName??'',
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 1),
-                                child: Categories(
-                                  title: context.read<WewaProductsCubit>().Categories[index].categoryName??'',
-                                  icon: context.read<WewaProductsCubit>().Categories[index].CategoryImg,
-                                ),
+            Expanded(
+              child: Container(
+                
+                width: MediaQuery.of(context).size.width,
+                child: BlocBuilder<WewaProductsCubit, WewaProductsState>(
+                  builder: (context, state) {
+                    return context.read<WewaProductsCubit>().flag == false
+                        ? const Center(
+                            child: Text("Loading"),
+                          )
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: LayoutGrid(
+                                columnSizes: [2.fr, 2.fr,2.fr,],
+                                rowSizes: [auto,auto, auto,auto,auto],
+                                columnGap: 30,
+                                rowGap: 20,
+                                children: [
+                                  for (int index = 0; index < context.read<WewaProductsCubit>().Categories.length; index++)
+                                    InkWell(
+                                      onTap: () async {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Center(child: CircularProgressIndicator());
+                                          },
+                                        );
+                                        context.read<WewaProductsCubit>().cat = context.read<WewaProductsCubit>().Categories[index];
+                                        await context.read<WewaProductsCubit>().scrollIntializer();
+                                        await context.read<WewaProductsCubit>().getCategoryProducts(
+                                              categoryId: context.read<WewaProductsCubit>().Categories[index].id ?? 0,
+                                              pageNumber: 1,
+                                            );
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return FilteredItemsScreen(
+                                                title: context.read<WewaProductsCubit>().Categories[index].categoryName ?? '',
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 1),
+                                        child: Categories(
+                                          title: context.read<WewaProductsCubit>().Categories[index].categoryName ?? '',
+                                          icon: context.read<WewaProductsCubit>().Categories[index].CategoryImg,
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
-                            );
-                          },
-                        );
-                },
+                            ),
+                          );
+                    //itemCount: context.read<WewaProductsCubit>().Categories.length,
+                  },
+                ),
               ),
             )
           ],
@@ -141,8 +150,8 @@ class Categories extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
-              height: 75,
-              width: 75,
+              height: 100,
+              width: 100,
               imageUrl: icon ?? '',
               errorWidget: (context, url, error) => const Icon(Icons.image_not_supported_outlined),
               placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
