@@ -89,33 +89,43 @@ class FilteredItemsScreen extends StatelessWidget {
                         child: Container(
                           child: SingleChildScrollView(
                             controller: context.read<WewaProductsCubit>().controller,
-                            child: LayoutGrid(
-                              columnSizes: [2.fr,2.fr],
-                              rowSizes: [auto,auto,auto,auto,auto,auto,],
-                              columnGap: 5,rowGap: 10,
-                              children: [
-                                for(int index = 0;index <context.read<WewaProductsCubit>().Products.length;index++)
-                                  InkWell(
-                                    onTap: () {
-                                      context.read<WewaProductsCubit>().Products[index].description = context.read<WewaProductsCubit>().parseHtmlString(context.read<WewaProductsCubit>().Products[index].description??'').trim();
-                                      context.read<WewaProductsCubit>().Products[index].description = context.read<WewaProductsCubit>().Products[index].description?.replaceAll('\n', ',');
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0,right: 8),
+                              child: LayoutGrid(
+                                columnSizes: MediaQuery.of(context).orientation == Orientation.portrait? [2.fr,2.fr]:[2.fr,2.fr,2.fr,2.fr],
+                                rowSizes:MediaQuery.of(context).orientation == Orientation.portrait?  [
+                                  for(int index = 0;index <context.read<WewaProductsCubit>().Products.length/2;index++)
+                                  auto
+                                ]:
+                                [
+                                  for(int index = 0;index <context.read<WewaProductsCubit>().Products.length/4;index++)
+                                    auto
+                                ],
+                                columnGap: 10,rowGap: 10,
+                                children: [
+                                  for(int index = 0;index <context.read<WewaProductsCubit>().Products.length;index++)
+                                    InkWell(
+                                      onTap: () {
+                                        context.read<WewaProductsCubit>().Products[index].description = context.read<WewaProductsCubit>().parseHtmlString(context.read<WewaProductsCubit>().Products[index].description??'').trim();
+                                        context.read<WewaProductsCubit>().Products[index].description = context.read<WewaProductsCubit>().Products[index].description?.replaceAll('\n', ',');
 
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                        return ProductDetailsScreen(product: context.read<WewaProductsCubit>().Products[index],Category: title,);
-                                      },));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 1),
-                                      child: CartItem(
-                                        title: context.read<WewaProductsCubit>().Products[index].name ?? '',
-                                        productImage: context.read<WewaProductsCubit>().Products[index].images?.first['src'],
-                                        price: context.read<WewaProductsCubit>().Products[index].price??'',
-                                        rate: context.read<WewaProductsCubit>().Products[index].rate.toString(),
-                                        addToCartOnTap: (){},
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return ProductDetailsScreen(product: context.read<WewaProductsCubit>().Products[index],Category: title,);
+                                        },));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 1),
+                                        child: CartItem(
+                                          title: context.read<WewaProductsCubit>().Products[index].name ?? '',
+                                          productImage: context.read<WewaProductsCubit>().Products[index].images?.first['src'],
+                                          price: context.read<WewaProductsCubit>().Products[index].price??'',
+                                          rate: context.read<WewaProductsCubit>().Products[index].rate.toString(),
+                                          addToCartOnTap: (){},
+                                        ),
                                       ),
-                                    ),
-                                  )
-                              ],
+                                    )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -163,7 +173,7 @@ class CartItem extends StatelessWidget {
           elevation: 5,
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            height: 220,
+            height: MediaQuery.of(context).orientation == Orientation.portrait? 220:180,
             width: 170,
             margin: const EdgeInsets.only(
               left: 4,

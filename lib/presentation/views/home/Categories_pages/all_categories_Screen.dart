@@ -64,7 +64,6 @@ class AllCategories extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                
                 width: MediaQuery.of(context).size.width,
                 child: BlocBuilder<WewaProductsCubit, WewaProductsState>(
                   builder: (context, state) {
@@ -75,10 +74,14 @@ class AllCategories extends StatelessWidget {
                         : SingleChildScrollView(
                             child: Center(
                               child: LayoutGrid(
-                                columnSizes: [2.fr, 2.fr,2.fr,],
-                                rowSizes: [auto,auto, auto,auto,auto],
-                                columnGap: 30,
-                                rowGap: 20,
+                                columnSizes: MediaQuery.of(context).orientation == Orientation.portrait
+                                    ? [2.fr, 2.fr, 2.fr, 2.fr,]
+                                    : [2.fr, 2.fr, 2.fr, 2.fr, 2.fr,],
+                                rowSizes: MediaQuery.of(context).orientation == Orientation.portrait
+                                ?[for (int index = 0; index < context.read<WewaProductsCubit>().Categories.length / 4; index++) auto]:
+                                [for (int index = 0; index < context.read<WewaProductsCubit>().Categories.length / 5; index++) auto],
+                                columnGap: -1,
+                                rowGap: 10,
                                 children: [
                                   for (int index = 0; index < context.read<WewaProductsCubit>().Categories.length; index++)
                                     InkWell(
@@ -147,14 +150,21 @@ class Categories extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, right: 12),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              height: 100,
-              width: 100,
-              imageUrl: icon ?? '',
-              errorWidget: (context, url, error) => const Icon(Icons.image_not_supported_outlined),
-              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                height: 70,
+                width: 130,
+                imageUrl: icon ?? '',
+                fit: BoxFit.fill,
+                errorWidget: (context, url, error) => const Icon(Icons.image_not_supported_outlined),
+                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+              ),
             ),
           ),
           Text(

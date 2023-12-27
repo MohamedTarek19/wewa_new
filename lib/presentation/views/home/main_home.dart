@@ -84,7 +84,7 @@ class MainHome extends StatelessWidget {
                     SliverAppBar(
                       pinned: true,
                       floating: true,
-                      expandedHeight: MediaQuery.of(context).size.height * 0.17,
+                      expandedHeight: kToolbarHeight*2,
                       backgroundColor: Colors.white,
                       surfaceTintColor: Colors.white,
                       elevation: 10,
@@ -186,7 +186,7 @@ class MainHome extends StatelessWidget {
                           SafeArea(
                             top: true,
                             minimum: const EdgeInsets.only(
-                              top: 60,
+                              top: 20,
                               left: 24,
                               right: 24,
                             ),
